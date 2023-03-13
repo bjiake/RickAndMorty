@@ -5,8 +5,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.ActivityEpisodesBinding
-import kotlinx.coroutines.*
-import okhttp3.Dispatcher
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,15 +35,12 @@ class EpisodesActivity: AppCompatActivity() {
         episodesAPI.getEpisodesByCharacter().enqueue(object : Callback<EpisodesResponse> {
             override fun onResponse(call: Call<EpisodesResponse>, response: Response<EpisodesResponse>) {
                 if (response.isSuccessful) {
-                    val episodes = response.body()?.episodes
                     var newEpisodes = emptyList<EpisodesNW>()
 
-                    if (episodes != null) {
-                        episodes.forEach {
-                            for(item in it.characters){
-                                if(item == character){
-                                    newEpisodes = newEpisodes + it
-                                }
+                    response.body()?.episodes?.forEach {
+                        for (item in it.characters) {
+                            if (item == character) {
+                                newEpisodes = newEpisodes + it
                             }
                         }
                     }
