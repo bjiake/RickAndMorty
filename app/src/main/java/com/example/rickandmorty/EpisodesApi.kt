@@ -22,6 +22,5 @@ interface EpisodesApi {
 
     @GET("episode/")
     fun getEpisodesByCharacter(
-        @Query("character") character: String
     ): Call<EpisodesResponse>
 }

@@ -29,25 +29,29 @@ class EpisodesActivity: AppCompatActivity() {
 
         recyclerViewInit()
 
-        if(EpisodeObject.episodeObject.isEmpty()){
-            loadEpisodes()
-        } else{
-            episodesAdapter.submitList(EpisodeObject.episodeObject)
-            Log.d("aaaIntent","Забираю")
-        }
+
+        loadEpisodes()
     }
 
     private fun loadEpisodes()  {
-        episodesAPI.getEpisodesByCharacter(character).enqueue(object : Callback<EpisodesResponse> {
-            override fun onResponse(
-                call: Call<EpisodesResponse>,
-                response: Response<EpisodesResponse>
-            ) {
+        episodesAPI.getEpisodesByCharacter().enqueue(object : Callback<EpisodesResponse> {
+            override fun onResponse(call: Call<EpisodesResponse>, response: Response<EpisodesResponse>) {
                 if (response.isSuccessful) {
                     val episodes = response.body()?.episodes
-                    EpisodeObject.episodeObject = episodes ?: emptyList()
+                    var newEpisodes = emptyList<EpisodesNW>()
+
+                    if (episodes != null) {
+                        episodes.forEach {
+                            for(item in it.characters){
+                                if(item == character){
+                                    newEpisodes = newEpisodes + it
+                                }
+                            }
+                        }
+                    }
+                    EpisodeObject.episodeObject = newEpisodes
                     episodesAdapter.submitList(EpisodeObject.episodeObject)
-                    Log.d("aaaIntent", "Загружаю с сервера")
+                    Log.d("aaaIntent", "${EpisodeObject.episodeObject}")
                 } else {
                     Log.d("EpisodesActivity", "Response error: ${response.code()}")
                 }
