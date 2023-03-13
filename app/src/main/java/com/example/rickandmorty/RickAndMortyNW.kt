@@ -18,6 +18,7 @@ data class CharacterResponse(
         val prev: String?
     )
 }
+
 data class RickAndMortyNW(
     @SerializedName("id")
     val id: Int,

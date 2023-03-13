@@ -22,10 +22,8 @@ class MainActivity : AppCompatActivity() {
         Timber.plant(Timber.DebugTree())
 
         recyclerViewInit()
-
         if(RickAndMortyObject.rickAndMortyList.isEmpty()) {
             loadAllCharacters()
-
         } else{
             rickAndMortyAdapter.submitList(RickAndMortyObject.rickAndMortyList)
         }
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                    }
                }
                 override fun onFailure(call: Call<CharacterResponse>, t: Throwable) {
-                    println("Error: ${t.message}")
+                    Log.e("aaa", "$t")
                 }
             }
             )
