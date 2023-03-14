@@ -25,8 +25,8 @@ class RickAndMortyAdapter: ListAdapter<RickAndMortyNW, RecyclerView.ViewHolder>(
         holder.itemView.setOnClickListener(){
             val intent = Intent(holder.itemView.context, EpisodesActivity::class.java)
 
-            val character = RickAndMortyObject.rickAndMortyList[position].url
-            intent.putExtra("character", character)
+            val episodeList = RickAndMortyObject.rickAndMortyList[position].episode
+            intent.putStringArrayListExtra("episodeList", ArrayList(episodeList))
 
             holder.itemView.context.startActivity(intent)
         }

@@ -20,7 +20,9 @@ interface EpisodesApi {
         }
     }
 
-    @GET("episode/")
+    @GET("episode/{id}")
     fun getEpisodesByCharacter(
-    ): Call<EpisodesResponse>
+        @Path("id")
+        id: String
+    ): Call<EpisodeResponseNW>
 }

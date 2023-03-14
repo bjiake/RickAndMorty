@@ -1,5 +1,5 @@
 package com.example.rickandmorty
 
 object EpisodeObject {
-    var episodeObject = emptyList<EpisodesNW>()
+    var episodeObject = emptyList<EpisodeNW>()
 }

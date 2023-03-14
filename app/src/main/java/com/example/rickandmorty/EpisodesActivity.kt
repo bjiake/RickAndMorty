@@ -13,7 +13,7 @@ import timber.log.Timber
 class EpisodesActivity: AppCompatActivity() {
     private lateinit var binding: ActivityEpisodesBinding
     private var episodesAPI = EpisodesApi.createAPI()
-    private lateinit var character: String
+    private var episodeList = emptyList<String>()
     private val episodesAdapter = EpisodesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -21,38 +21,37 @@ class EpisodesActivity: AppCompatActivity() {
         binding = ActivityEpisodesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Timber.plant(Timber.DebugTree())
+        //Получить список эпизодов и отправить запрос на эти эпизоды
 
-        character = intent.getStringExtra("character").toString()
-        Log.d("aaaIntent","get:$character")
+        episodeList = intent.getStringArrayListExtra("episodeList")!!
+        Log.d("aaaIntent","get:$episodeList")
 
         recyclerViewInit()
-
 
         loadEpisodes()
     }
 
     private fun loadEpisodes()  {
-        episodesAPI.getEpisodesByCharacter().enqueue(object : Callback<EpisodesResponse> {
-            override fun onResponse(call: Call<EpisodesResponse>, response: Response<EpisodesResponse>) {
-                if (response.isSuccessful) {
-                    var newEpisodes = emptyList<EpisodesNW>()
+        val url = mutableListOf<String>()
+        for (it in episodeList){
+            val value = it.substringAfterLast("/")
+            url.add(value)
+        }
+        val result = url.joinToString(",")
+        Log.d("aaa","$result")
 
-                    response.body()?.episodes?.forEach {
-                        for (item in it.characters) {
-                            if (item == character) {
-                                newEpisodes = newEpisodes + it
-                            }
-                        }
-                    }
-                    EpisodeObject.episodeObject = newEpisodes
-                    episodesAdapter.submitList(EpisodeObject.episodeObject)
-                    Log.d("aaaIntent", "${EpisodeObject.episodeObject}")
+
+        episodesAPI.getEpisodesByCharacter(result)
+            .enqueue(object : Callback<EpisodeResponseNW> {
+            override fun onResponse(call: Call<EpisodeResponseNW>, response: Response<EpisodeResponseNW>) {
+                if (response.isSuccessful) {
+                    episodesAdapter.submitList(response.body())
                 } else {
                     Log.d("EpisodesActivity", "Response error: ${response.code()}")
                 }
             }
 
-            override fun onFailure(call: Call<EpisodesResponse>, t: Throwable) {
+            override fun onFailure(call: Call<EpisodeResponseNW>, t: Throwable) {
                 Log.d("EpisodesActivity", "Error: ${t.message}")
             }
         })

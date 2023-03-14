@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class EpisodesAdapter: ListAdapter<EpisodesNW, RecyclerView.ViewHolder>(EpisodeDiffCallBack()){
+class EpisodesAdapter: ListAdapter<EpisodeResponseNW.EpisodeResponseNWItem, RecyclerView.ViewHolder>(EpisodeDiffCallBack()){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_episodes_holder, parent, false)
         return EpisodesHolder(view)
@@ -18,6 +18,7 @@ class EpisodesAdapter: ListAdapter<EpisodesNW, RecyclerView.ViewHolder>(EpisodeD
         (holder as EpisodesHolder).bind(getItem(position))
     }
 
+
     override fun getItemCount(): Int {
         return super.getItemCount()
     }
@@ -25,19 +26,19 @@ class EpisodesAdapter: ListAdapter<EpisodesNW, RecyclerView.ViewHolder>(EpisodeD
 
 class EpisodesHolder(private val view: View) :
         RecyclerView.ViewHolder(view.rootView) {
-        fun bind(episode: EpisodesNW) {
+        fun bind(episode: EpisodeResponseNW.EpisodeResponseNWItem) {
             view.findViewById<TextView>(R.id.tvName).text = episode.name
-            view.findViewById<TextView>(R.id.tvAirDate).text = episode.air_date
+            view.findViewById<TextView>(R.id.tvAirDate).text = episode.airDate
         }
 }
 
-class EpisodeDiffCallBack: DiffUtil.ItemCallback<EpisodesNW>() {
+class EpisodeDiffCallBack: DiffUtil.ItemCallback<EpisodeResponseNW.EpisodeResponseNWItem>() {
     override fun areItemsTheSame(
-        oldItem: EpisodesNW,
-        newItem: EpisodesNW
+        oldItem: EpisodeResponseNW.EpisodeResponseNWItem,
+        newItem: EpisodeResponseNW.EpisodeResponseNWItem
     ): Boolean = oldItem == newItem
     override fun areContentsTheSame(
-        oldItem: EpisodesNW,
-        newItem: EpisodesNW
+        oldItem: EpisodeResponseNW.EpisodeResponseNWItem,
+        newItem: EpisodeResponseNW.EpisodeResponseNWItem
     ): Boolean = oldItem == newItem
 }
