@@ -51,6 +51,10 @@ class MainModelView : ViewModel() {
 
     fun loadNextPage() {
         ++page
+        Log.d("page:","$page")
+        if(page == 42){
+            return
+        }
         loadAllCharacters(page.toString())
     }
 }
