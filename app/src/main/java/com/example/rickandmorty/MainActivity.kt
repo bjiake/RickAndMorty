@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Timber.plant(Timber.DebugTree())
-
+            //
         recyclerViewInit()
 
         viewModel = ViewModelProvider(this)[MainModelView::class.java]
