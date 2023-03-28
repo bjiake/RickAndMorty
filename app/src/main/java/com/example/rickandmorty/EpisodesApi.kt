@@ -21,8 +21,8 @@ interface EpisodesApi {
     }
 
     @GET("episode/{id}")
-    fun getEpisodesByCharacter(
+    suspend fun getEpisodesByCharacter(
         @Path("id")
         id: String
-    ): Call<EpisodeResponseNW>
+    ): Response<EpisodeResponseNW>
 }
