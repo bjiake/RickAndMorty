@@ -1,5 +1,6 @@
 package com.example.rickandmorty
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +11,8 @@ import com.example.rickandmorty.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 //Добавить кнопку в самый вниз с помощью sealed class
 //При нажатии на кнопку -> удалить кнопку и прогрузить следующие 10 персонажей
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         Timber.plant(Timber.DebugTree())
         recyclerViewInit()
+        initRetrofit(this)
 
         viewModel = ViewModelProvider(this)[MainModelView::class.java]
         viewModel.rickAndMortyList.observe(this){ result ->
@@ -49,5 +53,15 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,
             false
         )
+    }
+    companion object{
+        lateinit var api: RickAndMortyApi
+        fun initRetrofit(context: Context){
+            val retrofitBuilder = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            api = retrofitBuilder.create(RickAndMortyApi::class.java)
+        }
     }
 }

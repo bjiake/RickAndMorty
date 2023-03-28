@@ -17,7 +17,7 @@ class MainModelView : ViewModel() {
     val rickAndMortyList get() = _rickAndMortyList
     var page: Int = 1
 
-    private var rickAndMortyAPI = RickAndMortyApi.createAPI()
+    //private var rickAndMortyAPI = RickAndMortyApi.createAPI()
 
     init {
         loadAllCharacters(page.toString())
@@ -26,7 +26,8 @@ class MainModelView : ViewModel() {
 
     private fun loadAllCharacters(page: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = rickAndMortyAPI.getAllCharacters(page)
+            //val response = rickAndMortyAPI.getAllCharacters(page)
+            val response = MainActivity.api.getAllCharacters(page)
 
             try {
                 if (response.isSuccessful) {

@@ -25,7 +25,8 @@ class EpisodeViewModel: ViewModel() {
 
     fun loadEpisodes() {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = episodesAPI.getEpisodesByCharacter(episodeId)
+            //val response = episodesAPI.getEpisodesByCharacter(episodeId)
+            val response = MainActivity.api.getEpisodesByCharacter(episodeId)
             try {
                 if (response.isSuccessful) {
                     _episodeList.postValue(response.body())
