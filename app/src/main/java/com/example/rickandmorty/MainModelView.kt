@@ -12,7 +12,7 @@ class MainModelView : ViewModel() {
     val rickAndMortyList get() = _rickAndMortyList
     var page: Int = 1
 
-    private var rickAndMortyAPI = RickAndMortyApi.createAPI()
+
 
     init {
         loadAllCharacters(page.toString())
@@ -20,7 +20,7 @@ class MainModelView : ViewModel() {
 
 
     private fun loadAllCharacters(page: String) {
-        rickAndMortyAPI.getAllCharacters(page).enqueue(object : Callback<CharacterResponse> {
+        MainActivity.api.getAllCharacters(page).enqueue(object : Callback<CharacterResponse> {
             override fun onResponse(
                 call: Call<CharacterResponse>,
                 response: Response<CharacterResponse>

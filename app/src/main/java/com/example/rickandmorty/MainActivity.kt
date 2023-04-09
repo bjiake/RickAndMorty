@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Timber.plant(Timber.DebugTree())
+        val mServices: RetrofitServices? = Common.retrofitService
+        if (mServices != null){
+            api = mServices
+        }
             //
         recyclerViewInit()
 
@@ -51,5 +55,8 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,
             false
         )
+    }
+    companion object{
+        lateinit var api: RetrofitServices
     }
 }

@@ -12,7 +12,6 @@ import timber.log.Timber
 
 class EpisodesActivity: AppCompatActivity() {
     private lateinit var binding: ActivityEpisodesBinding
-    private var episodesAPI = EpisodesApi.createAPI()
     private var episodeList = emptyList<String>()
     private val episodesAdapter = EpisodesAdapter()
 
@@ -41,7 +40,7 @@ class EpisodesActivity: AppCompatActivity() {
         Log.d("aaa","$result")
 
 
-        episodesAPI.getEpisodesByCharacter(result)
+        MainActivity.api.getEpisodesByCharacter(result)
             .enqueue(object : Callback<EpisodeResponseNW> {
             override fun onResponse(call: Call<EpisodeResponseNW>, response: Response<EpisodeResponseNW>) {
                 if (response.isSuccessful) {
