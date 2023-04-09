@@ -38,7 +38,7 @@ class EpisodesActivity: AppCompatActivity() {
         }
         val result = url.joinToString(",")
         Log.d("aaa","$result")
-
+            //
 
         MainActivity.api.getEpisodesByCharacter(result)
             .enqueue(object : Callback<EpisodeResponseNW> {
