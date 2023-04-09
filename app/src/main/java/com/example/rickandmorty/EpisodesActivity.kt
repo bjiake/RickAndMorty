@@ -29,7 +29,7 @@ class EpisodesActivity: AppCompatActivity() {
 
         loadEpisodes()
     }
-//
+//1
     private fun loadEpisodes()  {
         val url = mutableListOf<String>()
         for (it in episodeList){
